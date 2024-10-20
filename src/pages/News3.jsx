@@ -7,14 +7,14 @@ import { useNavigate } from "react-router-dom";
 export default function News3() {
   const navigate = useNavigate();
 
+  const handleClickPrev = () => {
+    navigate("/news/2");
+  };
+
   return (
     <div>
       <a href="/news" className="hover:underline">
         一覧へ戻る
-      </a>
-      <br />
-      <a href="/news/2" className="hover:underline">
-        ←prev
       </a>
       <br />
       <br />
@@ -31,6 +31,12 @@ export default function News3() {
         多くのサークルによる出店や発表、ほかにも様々な企画が開催され、地域の方もたくさん来てくれました!
         また、研究棟ではオープンラボも同時開催され、誰でも研究室を見学することができました。
       </p>
+      <div className="text-center mt-8 ">
+        <Button size="lg" variant="primary" onClick={handleClickPrev}>
+          ←prev
+        </Button>
+      </div>
+      <br />
     </div>
   );
 }
