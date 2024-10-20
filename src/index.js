@@ -15,6 +15,7 @@ import News1 from "./pages/News1";
 import News2 from "./pages/News2";
 import News3 from "./pages/News3";
 import Members from "./pages/Members";
+import CreateNews from "./pages/CreateNews";
 
 const router = createBrowserRouter([
   //   あなたが指定したいpathを、path: "/example"の部分に指定してください。
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
   {
     path: "/members",
     element: <Members />,
+  },
+  {
+    path: "/createNews",
+    element: <CreateNews />,
   },
 ]);
 
