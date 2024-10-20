@@ -7,15 +7,22 @@ import { useNavigate } from "react-router-dom";
 export default function News() {
   const navigate = useNavigate();
 
+  const handleClickHome = () => {
+    navigate("/");
+  };
+
   return (
     <div>
-      <a href="/" className="hover:underline">
-        ホームへ
-      </a>
+      <div className="text-center mt-8 ">
+        <Button size="lg" variant="primary" onClick={handleClickHome}>
+          ホームへ
+        </Button>
+      </div>
       <br />
       <br />
       <h1>ニュース一覧</h1>
       <br />
+
       <a href="/news/1" className="hover:underline">
         PM体験とプログラミング開発を学ぶ2daysが開催されました!
       </a>

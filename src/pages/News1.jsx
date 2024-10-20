@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 
 export default function News() {
   const navigate = useNavigate();
+  const handleClickNext = () => {
+    navigate("/news/2");
+  };
 
   return (
     <div>
@@ -29,9 +32,12 @@ export default function News() {
         初日は企画説明と基礎講座、2日目は3,4人のグループを作り企業ホームページの作成を疑似体験しました。
         どのグループも個性のあるホームページを作成することができました!
       </p>
-      <a href="/news/2" className="hover:underline">
-        next→
-      </a>
+      <div className="text-center mt-8 ">
+        <Button size="lg" variant="primary" onClick={handleClickNext}>
+          next→
+        </Button>
+      </div>
+      <br />
     </div>
   );
 }
