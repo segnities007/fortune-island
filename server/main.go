@@ -40,6 +40,7 @@ func main() {
 
 	log.Println("Connected to the database!")
 	db.AutoMigrate(&model.User{})
+	db = db.Debug()
 
 	e := echo.New()
 
@@ -97,14 +98,19 @@ func createNews(c echo.Context) error {//完成
 
 ///
 
-func getUser(c echo.Context) error {//完成
-	id := c.FormValue("id")
+func getUser(c echo.Context) error {
+	id := c.Param("id")
+
+	userID, err := strconv.ParseUint(id, 10, 64)
+	if err != nil {
+		return c.String(http.StatusBadRequest, "Invalid user ID")
+	}
 
 	var user model.User
-	result := db.First(&user, id)
+	result := db.First(&user, userID)
 
 	if result.Error != nil {
-		return c.String(http.StatusNotFound, "Not exist the user having the id. or etc")
+		return c.String(http.StatusNotFound, "User not found")
 	}
 
 	return c.JSON(http.StatusOK, user)
@@ -139,18 +145,22 @@ func createUser(c echo.Context) error {
         Password: password,
     }
 
-    err := createUserToDataBase(user)
-    if err != nil {
+    if err := createUserToDataBase(&user); err != nil {
         log.Println("Error creating user:", err)
         return c.String(http.StatusInternalServerError, "Failed to create user")
     }
 
     log.Println("User created successfully")
-    get(c, user.Model.ID)
-    return c.String(http.StatusOK, "User created successfully")
+
+    // パスワードを含めず、ユーザーID、名前、メールのみを返す
+    return c.JSON(http.StatusOK, map[string]interface{}{
+        "ID":    user.ID,
+        "name":  user.Name,
+        "email": user.Email,
+    })
 }
 
 
-func createUserToDataBase(user model.User) error { // 完成
+func createUserToDataBase(user *model.User) error { // 完成
 	return db.Create(&user).Error
 }
