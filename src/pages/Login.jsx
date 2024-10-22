@@ -6,7 +6,7 @@ const UserRegistrationForm = () => {
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // フォームのデフォルトの送信を防ぐ
+    e.preventDefault();
 
     try {
       const response = await fetch('http://localhost:8080/create/user', {
@@ -21,8 +21,11 @@ const UserRegistrationForm = () => {
         }),
       });
 
+      const responseText = await response.text();
+      console.log('Response Text:', responseText);
+
       if (response.ok) {
-        const user = await response.json();
+        const user = JSON.parse(responseText);
         console.log('User created:', user);
       } else {
         console.error('Failed to create user:', response.statusText);
@@ -30,18 +33,13 @@ const UserRegistrationForm = () => {
     } catch (error) {
       console.error('Error during fetch:', error);
     }
-
-
-    // フォームのリセット
-    setName('');
-    setEmail('');
-    setPassword('');
   };
 
+
   return (
-    <div>
-      <h1 className='text-center'>User Registration</h1>
-      <div className="max-w-md mx-auto p-6 border border-gray-300 rounded-lg shadow-md">
+    <div className="flex items-center justify-center h-screen bg-gray-100">
+      <div className="max-w-md mx-auto p-6 border border-gray-300 rounded-lg shadow-md bg-white">
+        <h1 className='text-center text-lg font-semibold'>User Registration</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name:</label>
